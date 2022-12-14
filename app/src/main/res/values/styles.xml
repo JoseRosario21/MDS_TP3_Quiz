@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.MDS_TP3_Quiz.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:layout_marginStart">@dimen/text_margin_start</item>
+        <item name="android:layout_marginEnd">@dimen/text_margin_end</item>
+    </style>
+
+    <style name="Theme.MDS_TP3_Quiz.TextView.Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="Theme.MDS_TP3_Quiz.TextView.Subtitle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="Theme.MDS_TP3_Quiz.TextView.Label">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Theme.MDS_TP3_Quiz.EditText">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
+    </style>
+</resources>
