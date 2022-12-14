@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv_login_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Theme.MDS_TP3_Quiz.TextView.Title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/large_margin"
+        android:text="@string/login_title" />
+
+    <TextView
+        android:id="@+id/tv_login_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Theme.MDS_TP3_Quiz.TextView.Subtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_login_title"
+        android:layout_marginTop="@dimen/small_margin"
+        android:text="@string/login_subtitle" />
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_subtitle"
+        app:layout_constraintBottom_toTopOf="@+id/rl_content"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tv_login_email_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Theme.MDS_TP3_Quiz.TextView.Label"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="@string/login_email_label" />
+
+        <EditText
+            android:id="@+id/tv_login_email_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/smaller_margin"
+            style="@style/Theme.MDS_TP3_Quiz.EditText"
+            android:inputType="textEmailAddress"
+            android:autofillHints="emailAddress"
+            android:layout_below="@+id/tv_login_email_label"
+            android:hint="@string/login_email_label"/>
+
+        <TextView
+            android:id="@+id/tv_login_username_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Theme.MDS_TP3_Quiz.TextView.Label"
+            android:layout_below="@+id/tv_login_email_input"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="@string/login_username_label" />
+
+        <EditText
+            android:id="@+id/tv_login_username_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/smaller_margin"
+            android:autofillHints=""
+            style="@style/Theme.MDS_TP3_Quiz.EditText"
+            android:inputType="text"
+            android:layout_below="@+id/tv_login_username_label"
+            android:hint="@string/login_username_label"/>
+
+        <TextView
+            android:id="@+id/tv_login_password_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Theme.MDS_TP3_Quiz.TextView.Label"
+            android:layout_below="@+id/tv_login_username_input"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="@string/login_password_label" />
+
+        <EditText
+            android:id="@+id/tv_login_password_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/smaller_margin"
+            style="@style/Theme.MDS_TP3_Quiz.EditText"
+            android:inputType="textPassword"
+            android:autofillHints=""
+            android:layout_below="@+id/tv_login_password_label"
+            android:hint="@string/login_password_label"/>
+
+        <Button
+            android:id="@+id/btn_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_sign_in_now_button"
+            android:textAllCaps="false"
+            android:layout_below="@+id/tv_login_password_input"
+            android:layout_marginHorizontal="@dimen/normal_margin"/>
+
+        <LinearLayout
+            android:id="@+id/ll_login_other_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:layout_below="@+id/btn_signup"
+            android:orientation="horizontal">
+
+                <View
+                    android:background="@color/login_guideline_color"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_marginTop="@dimen/smaller_margin"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_height="2dp"/>
+
+                <TextView
+                    android:id="@+id/tv_login_other_options"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Theme.MDS_TP3_Quiz.TextView.Label"
+                    android:textAlignment="center"
+                    android:text="@string/login_other_options_label" />
+
+                <View
+                    android:background="@color/login_guideline_color"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_marginTop="@dimen/smaller_margin"
+                    android:layout_marginEnd="@dimen/small_margin"
+                    android:layout_height="2dp"/>
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:layout_marginBottom="@dimen/normal_margin"
+            android:layout_below="@+id/ll_login_other_options">
+
+            <ImageView
+                android:id="@+id/fab_email_login"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/btn_login"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fab_google_login"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/fab_google_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/btn_google"
+                app:layout_constraintStart_toEndOf="@+id/fab_email_login"
+                app:layout_constraintEnd_toStartOf="@+id/fab_facebook_login"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/fab_facebook_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/btn_facebook"
+                app:layout_constraintStart_toEndOf="@+id/fab_google_login"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
