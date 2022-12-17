@@ -18,7 +18,14 @@
         android:theme="@style/Theme.MDS_TP3_Quiz"
         tools:targetApi="31">
         <activity
-            android:name=".NavigationActivity"
+            android:name=".presentation.quiz_game.QuizGameActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".presentation.navigation.NavigationActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

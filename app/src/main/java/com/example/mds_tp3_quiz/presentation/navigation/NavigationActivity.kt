@@ -1,11 +1,15 @@
-package com.example.mds_tp3_quiz
+package com.example.mds_tp3_quiz.presentation.navigation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.example.mds_tp3_quiz.adapters.ViewPagerAdapter
+import com.example.mds_tp3_quiz.R
+import com.example.mds_tp3_quiz.presentation.navigation.adapters.ViewPagerAdapter
+import com.example.mds_tp3_quiz.presentation.navigation.fragments.HomeFragment
+import com.example.mds_tp3_quiz.presentation.navigation.fragments.ProfileFragment
+import com.example.mds_tp3_quiz.presentation.navigation.fragments.RankingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class NavigationActivity : AppCompatActivity() {

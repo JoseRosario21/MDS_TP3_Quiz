@@ -32,7 +32,7 @@
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:src="@drawable/mds_tp3_quiz_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,81 +47,77 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:id="@+id/tv_login_email_label"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tv_login_email_layout"                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Theme.MDS_TP3_Quiz.TextView.Label"
             android:layout_marginTop="@dimen/small_margin"
-            android:text="@string/login_email_label" />
+            android:layout_marginHorizontal="@dimen/normal_margin">
 
-        <EditText
-            android:id="@+id/tv_login_email_input"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tv_login_email_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:autofillHints="emailAddress"
+                android:hint="@string/login_email_label" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tv_login_username_label"                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/smaller_margin"
-            style="@style/Theme.MDS_TP3_Quiz.EditText"
-            android:inputType="textEmailAddress"
-            android:autofillHints="emailAddress"
-            android:layout_below="@+id/tv_login_email_label"
-            android:hint="@string/login_email_label"/>
-
-        <TextView
-            android:id="@+id/tv_login_username_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Theme.MDS_TP3_Quiz.TextView.Label"
-            android:layout_below="@+id/tv_login_email_input"
+            android:layout_below="@+id/tv_login_email_layout"
             android:layout_marginTop="@dimen/small_margin"
-            android:text="@string/login_username_label" />
+            android:layout_marginHorizontal="@dimen/normal_margin">
 
-        <EditText
-            android:id="@+id/tv_login_username_input"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tv_login_username_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:autofillHints="username"
+                android:hint="@string/login_username_label"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tv_login_password_label"                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/smaller_margin"
-            android:autofillHints=""
-            style="@style/Theme.MDS_TP3_Quiz.EditText"
-            android:inputType="text"
             android:layout_below="@+id/tv_login_username_label"
-            android:hint="@string/login_username_label"/>
-
-        <TextView
-            android:id="@+id/tv_login_password_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Theme.MDS_TP3_Quiz.TextView.Label"
-            android:layout_below="@+id/tv_login_username_input"
             android:layout_marginTop="@dimen/small_margin"
-            android:text="@string/login_password_label" />
+            android:layout_marginHorizontal="@dimen/normal_margin">
 
-        <EditText
-            android:id="@+id/tv_login_password_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/smaller_margin"
-            style="@style/Theme.MDS_TP3_Quiz.EditText"
-            android:inputType="textPassword"
-            android:autofillHints=""
-            android:layout_below="@+id/tv_login_password_label"
-            android:hint="@string/login_password_label"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tv_login_password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:autofillHints=""
+                android:hint="@string/login_password_label"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/btn_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/login_sign_up_now_button"
+            android:layout_below="@+id/tv_login_password_label"
+            android:layout_margin="@dimen/normal_margin"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:layout_marginEnd="@dimen/normal_margin"
+            android:layout_marginBottom="@dimen/normal_margin"
             android:enabled="false"
-            android:textAllCaps="false"
-            android:layout_below="@+id/tv_login_password_input"
-            android:layout_marginHorizontal="@dimen/normal_margin"/>
+            android:text="@string/login_sign_up_now_button"
+            android:textAllCaps="false" />
 
 
         <LinearLayout
             android:id="@+id/ll_login_other_options"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/normal_margin"
+            android:layout_marginTop="@dimen/small_margin"
             android:layout_below="@+id/btn_signup"
             android:orientation="horizontal">
 

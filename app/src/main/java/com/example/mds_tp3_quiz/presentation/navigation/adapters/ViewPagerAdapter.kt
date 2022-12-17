@@ -1,4 +1,4 @@
-package com.example.mds_tp3_quiz.adapters
+package com.example.mds_tp3_quiz.presentation.navigation.adapters
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
