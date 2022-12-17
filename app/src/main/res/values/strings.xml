@@ -13,4 +13,7 @@
     <string name="login_sign_up_now_button">Sign up now</string>
     <string name="login_sign_in_button">Sign in</string>
     <string name="web_client_id">390079287266-5esrurd06c48gm97dd9hodf6vfsr50ci.apps.googleusercontent.com</string>
+    <string name="login_sign_in_now_button">Sign up now</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,0 +1,62 @@
+package com.example.mds_tp3_quiz
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import androidx.core.view.get
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
+import com.example.mds_tp3_quiz.adapters.ViewPagerAdapter
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
+class NavigationActivity : AppCompatActivity() {
+    private lateinit var viewPager: ViewPager2
+    private lateinit var bottomNavigation: BottomNavigationView
+    private lateinit var fragments: ArrayList<Fragment>
+    private lateinit var adapter: ViewPagerAdapter
+    private val home = HomeFragment()
+    private val ranking = RankingFragment()
+    private val profile = ProfileFragment()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_navigation)
+
+        fragments = arrayListOf(home, ranking, profile)
+        adapter = ViewPagerAdapter(fragments, this)
+
+        setupNavigationListener()
+        setupViewAdapter()
+    }
+
+    private fun setupNavigationListener() {
+        bottomNavigation = findViewById(R.id.bottom_nav)
+        bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.mi_home -> {
+                    viewPager.currentItem = 0
+                    return@setOnItemSelectedListener true
+                }
+                R.id.mi_ranking -> {
+                    viewPager.currentItem = 1
+                    return@setOnItemSelectedListener true
+                }
+                R.id.mi_profile -> {
+                    viewPager.currentItem = 2
+                    return@setOnItemSelectedListener true
+                }
+            }
+            false
+        }
+    }
+
+    private fun setupViewAdapter(){
+        viewPager = findViewById(R.id.view_pager)
+        viewPager.adapter = adapter
+
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                bottomNavigation.menu.get(position).setChecked(true)
+            }
+        })
+    }
+}
