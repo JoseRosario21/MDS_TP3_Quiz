@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">MDS_TP3_Quiz</string>
-    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <!-- Tokens -->
     <string name="facebook_application_id" translatable="false">673164810943292</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb673164810943292</string>
     <string name="facebook_client_token">fda4192b41eabb29d33aac7f36eb2ce6</string>
+
+    <!-- Strings -->
     <string name="login_title">Sign up now</string>
     <string name="login_subtitle">Join the quiz in the pursuit of knowledge</string>
     <string name="login_email_label">Email</string>

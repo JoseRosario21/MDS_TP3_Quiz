@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mds_tp3_quiz.presentation.navigation.NavigationActivity
+import com.example.mds_tp3_quiz.presentation.quiz_game.QuizGameActivity
 import com.facebook.*
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
@@ -18,12 +20,9 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
-import com.example.mds_tp3_quiz.adapters.ViewPagerAdapter
 import com.facebook.FacebookSdk
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -35,15 +34,13 @@ class MainActivity : AppCompatActivity() {
                     val idToken = credential.googleIdToken
                     when {
                         idToken != null -> {
-                            // Got an ID token from Google. Use it to authenticate
-                            // with Firebase.
+                            // Got an ID token from Google. Use it to authenticate with Firebase.
                             val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
                             auth.signInWithCredential(firebaseCredential)
                                 .addOnCompleteListener(this) { task ->
                                     if (task.isSuccessful) {
                                         // Sign in success, update UI with the signed-in user's information
-                                        val user = auth.currentUser
-                                        Toast.makeText(this, "Authenticated", Toast.LENGTH_SHORT).show()
+                                        logInSuccessfully(auth.currentUser)
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
@@ -82,16 +79,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+
         // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        if (currentUser != null){
-            auth.signOut()
-            Toast.makeText(this, "Logged out: " + (auth.currentUser == null).toString(), Toast.LENGTH_SHORT).show()
-            // TODO Send to homepage activity
+        if (auth.currentUser != null) {
+            logInSuccessfully(auth.currentUser)
         }
         addListeners()
     }
 
+    // TODO Check if it can be removed
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -153,17 +149,14 @@ class MainActivity : AppCompatActivity() {
         auth.signInAnonymously()
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    // TODO Send to homepage activity
-                    Toast.makeText(this, "Logged in with success!", Toast.LENGTH_SHORT).show()
+                    logInSuccessfully(auth.currentUser)
                 } else {
-                    Toast.makeText(this, "An error occurred.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "An error occurred. Please try again later.", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
     private fun logInViaFacebookAccount() {
-        // Initialize Facebook Login button
         val callback : FacebookCallback<LoginResult> = object : FacebookCallback<LoginResult> {
             override fun onCancel() {
                 Toast.makeText(this@MainActivity, "Login Canceled", Toast.LENGTH_LONG).show()
@@ -190,9 +183,7 @@ class MainActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    // TODO Send to homepage activity
-                    Toast.makeText(this, "Logged in with success!", Toast.LENGTH_SHORT).show()
+                    logInSuccessfully(auth.currentUser)
                 }
             }
             .addOnFailureListener { e ->
@@ -215,7 +206,6 @@ class MainActivity : AppCompatActivity() {
         oneTapClient.beginSignIn(signInRequest)
             .addOnSuccessListener(this) { result ->
                 try {
-                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show()
                     val intentSenderRequest = IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
                     googleLoginResultLauncher.launch(intentSenderRequest)
                 } catch (e: SendIntentException) {
@@ -223,7 +213,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener(this) { e ->
-                // No saved credentials found. Launch the One Tap sign-up flow
                 Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
             }
     }
@@ -233,9 +222,7 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    val user = auth.currentUser
-                    // TODO Send to homepage activity
-                    Toast.makeText(this, "Account created with success", Toast.LENGTH_SHORT).show()
+                    logInSuccessfully(auth.currentUser)
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
@@ -248,13 +235,16 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    val user = auth.currentUser
-                    // TODO Send to homepage activity
-                    Toast.makeText(this, "Account created with success", Toast.LENGTH_SHORT).show()
+                    logInSuccessfully(auth.currentUser)
                 } else {
                     // If sign in fails, display a message to the user.
-                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, "Account creation failed.", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+
+    private fun logInSuccessfully(user: FirebaseUser?) {
+        startActivity(Intent(this, QuizGameActivity::class.java))
     }
 }
