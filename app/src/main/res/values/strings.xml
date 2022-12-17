@@ -10,5 +10,7 @@
     <string name="login_username_label">Username</string>
     <string name="login_password_label">Password</string>
     <string name="login_other_options_label">Or sign-in with</string>
-    <string name="login_sign_in_now_button">Sign up now</string>
+    <string name="login_sign_up_now_button">Sign up now</string>
+    <string name="login_sign_in_button">Sign in</string>
+    <string name="web_client_id">390079287266-5esrurd06c48gm97dd9hodf6vfsr50ci.apps.googleusercontent.com</string>
 </resources>
