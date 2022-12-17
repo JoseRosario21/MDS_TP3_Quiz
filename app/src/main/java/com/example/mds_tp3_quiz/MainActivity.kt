@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mds_tp3_quiz.presentation.navigation.NavigationActivity
 import com.example.mds_tp3_quiz.presentation.quiz_game.QuizGameActivity
 import com.facebook.*
 import com.facebook.appevents.AppEventsLogger
@@ -87,7 +86,6 @@ class MainActivity : AppCompatActivity() {
         addListeners()
     }
 
-    // TODO Check if it can be removed
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -245,6 +243,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun logInSuccessfully(user: FirebaseUser?) {
+        // TODO - Replace this activity with homepage
         startActivity(Intent(this, QuizGameActivity::class.java))
     }
 }
