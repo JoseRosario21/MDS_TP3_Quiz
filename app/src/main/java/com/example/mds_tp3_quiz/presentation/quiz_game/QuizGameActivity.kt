@@ -4,24 +4,21 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.game.QuizGame
+import com.example.mds_tp3_quiz.model.Quiz
 import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.FirstFragment
 import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.SecondFragment
 
-class QuizGameActivity : AppCompatActivity() {
-    private val quizGame: QuizGame = QuizGame()
+class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
+    private val quizGame: QuizGame = QuizGame(this, this)
 
-    private val firstFragment = FirstFragment()
-    private val secondFragment = SecondFragment()
+    private lateinit var firstFragment: FirstFragment
+    private lateinit var secondFragment: SecondFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_game)
 
         quizGame.start()
-
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, FirstFragment())
-            .commit()
     }
 
     private fun showFirstFragment() {
@@ -36,7 +33,20 @@ class QuizGameActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    fun getNextQuiz(): Quiz {
+        return quizGame.getNextQuestion()
+    }
+
     fun onProceedButtonClick() {
         showSecondFragment()
+    }
+
+    override fun onGameReady() {
+        firstFragment = FirstFragment()
+        secondFragment = SecondFragment()
+
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, firstFragment)
+            .commit()
     }
 }
