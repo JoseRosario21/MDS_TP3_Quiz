@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
     private fun showDetails(user: FirebaseUser?): String{
 
         return when (user) {
-            null -> "No Authenticated user"
+            null -> "Anon_User"
             else -> "${user.displayName}"
         }
     }
