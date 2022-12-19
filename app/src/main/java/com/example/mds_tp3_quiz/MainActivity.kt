@@ -10,7 +10,6 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mds_tp3_quiz.presentation.navigation.NavigationActivity
-import com.example.mds_tp3_quiz.presentation.quiz_game.QuizGameActivity
 import com.facebook.*
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
@@ -22,7 +21,6 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
 import com.facebook.FacebookSdk
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -40,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                                 .addOnCompleteListener(this) { task ->
                                     if (task.isSuccessful) {
                                         // Sign in success, update UI with the signed-in user's information
-                                        logInSuccessfully(auth.currentUser)
+                                        logInSuccessfully()
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
@@ -82,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
         // Check if user is signed in (non-null) and update UI accordingly.
         if (auth.currentUser != null) {
-            logInSuccessfully(auth.currentUser)
+            logInSuccessfully()
         }
         addListeners()
     }
@@ -148,7 +146,7 @@ class MainActivity : AppCompatActivity() {
         auth.signInAnonymously()
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    logInSuccessfully(auth.currentUser)
+                    logInSuccessfully()
                 } else {
                     Toast.makeText(this, "An error occurred. Please try again later.", Toast.LENGTH_SHORT).show()
                 }
@@ -182,7 +180,7 @@ class MainActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    logInSuccessfully(auth.currentUser)
+                    logInSuccessfully()
                 }
             }
             .addOnFailureListener { e ->
@@ -221,7 +219,7 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    logInSuccessfully(auth.currentUser)
+                    logInSuccessfully()
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
@@ -234,7 +232,7 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    logInSuccessfully(auth.currentUser)
+                    logInSuccessfully()
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(baseContext, "Account creation failed.", Toast.LENGTH_SHORT).show()
@@ -243,8 +241,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun logInSuccessfully(user: FirebaseUser?) {
-        // TODO - Replace this activity with homepage
+    private fun logInSuccessfully() {
         startActivity(Intent(this, NavigationActivity::class.java))
     }
 }
