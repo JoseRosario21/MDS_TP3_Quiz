@@ -2,22 +2,23 @@ package com.example.mds_tp3_quiz.presentation.quiz_game
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.game.QuizGame
 import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.FirstFragment
-import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.SecondFragment
+import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.QuestionFragment
 
 class QuizGameActivity : AppCompatActivity() {
-    private val quizGame: QuizGame = QuizGame()
+    lateinit var quizGame: QuizGame
 
     private val firstFragment = FirstFragment()
-    private val secondFragment = SecondFragment()
+    private val questionFragment = QuestionFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_game)
 
-        quizGame.start()
+        quizGame = ViewModelProvider(this).get(QuizGame::class.java)
 
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, FirstFragment())
@@ -32,7 +33,7 @@ class QuizGameActivity : AppCompatActivity() {
 
     private fun showSecondFragment() {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, secondFragment)
+        transaction.replace(R.id.fragment_container, questionFragment)
         transaction.commit()
     }
 
