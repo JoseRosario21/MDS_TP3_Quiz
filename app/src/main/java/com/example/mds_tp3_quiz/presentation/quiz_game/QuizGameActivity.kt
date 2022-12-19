@@ -18,10 +18,6 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_game)
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, FirstFragment())
-            .commit()
-
         quizGame.start()
     }
 
@@ -56,8 +52,18 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
 
     fun submitAnswer(answer: String){
         quizGame.submitAnswer(answer)
+        showFirstFragment()
     }
+
     fun nextQuestion(){
         quizGame.getNextQuestion()
+    }
+
+    fun getCurrentQuiz(): Quiz {
+        return quizGame.getCurrentQuiz()
+    }
+
+    fun getCurrentRound(): String {
+        return quizGame.getCurrentRound()
     }
 }

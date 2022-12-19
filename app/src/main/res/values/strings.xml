@@ -25,11 +25,12 @@
     <string name="home_newGame">New Game</string>
     <string name="home_dailyPoints">%d + to daily points</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Quiz Screen -->
     <string name="question_text">Dummy question</string>
     <string name="answer1">Dummy answer</string>
     <string name="answer2">Dummy answer</string>
     <string name="answer3">Dummy answer</string>
     <string name="answer4">Dummy answer</string>
+    <string name="current_round_formatter">Question %d of 10</string>
 
 </resources>
