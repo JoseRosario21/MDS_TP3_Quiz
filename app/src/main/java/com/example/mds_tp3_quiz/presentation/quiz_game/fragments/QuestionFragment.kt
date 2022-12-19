@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.game.QuizGame
+import com.example.mds_tp3_quiz.presentation.quiz_game.QuizGameActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,9 +27,6 @@ class QuestionFragment() : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
-
-    private val viewModel by lazy { ViewModelProvider(this)[QuizGame::class.java] }
 
     private val answers = mutableListOf<Button>()
     private lateinit var question: TextView
@@ -54,15 +52,6 @@ class QuestionFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupQuiz()
         setupAnswerListener()
-
-        viewModel.quiz.observe(viewLifecycleOwner){quiz ->
-            this.question.text = quiz.question
-            this.answers.get(0).text = quiz.answerA
-            this.answers.get(1).text = quiz.answerB
-            this.answers.get(2).text = quiz.answerC
-            this.answers.get(3).text = quiz.answerD
-            this.roundCunter.text = viewModel.getRoundCounterString()
-        }
     }
 
     companion object {
@@ -99,16 +88,13 @@ class QuestionFragment() : Fragment() {
     private fun setupAnswerListener() {
         for (answer in answers){
             answer.setOnClickListener {
-                if(viewModel.submitAnswer(answer.text.toString())){
+                (activity as QuizGameActivity).submitAnswer(answer.text.toString())
                     nextQuestion()
                 }
             }
-        }
     }
 
     private fun nextQuestion(){
-        viewModel.getNextQuestion()
-        val toast = Toast.makeText(context, "correta", Toast.LENGTH_SHORT)
-        toast.show()
+        (activity as QuizGameActivity).nextQuestion()
     }
 }

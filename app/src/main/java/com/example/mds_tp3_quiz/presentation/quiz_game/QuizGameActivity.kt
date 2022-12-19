@@ -2,7 +2,6 @@ package com.example.mds_tp3_quiz.presentation.quiz_game
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.game.QuizGame
 import com.example.mds_tp3_quiz.model.Quiz
@@ -53,5 +52,12 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, firstFragment)
             .commit()
+    }
+
+    fun submitAnswer(answer: String){
+        quizGame.submitAnswer(answer)
+    }
+    fun nextQuestion(){
+        quizGame.getNextQuestion()
     }
 }
