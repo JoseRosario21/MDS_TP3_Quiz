@@ -59,7 +59,7 @@ class NavigationActivity : AppCompatActivity() {
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                bottomNavigation.menu.get(position).setChecked(true)
+                bottomNavigation.menu[position].isChecked = true
             }
         })
     }

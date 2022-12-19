@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() {
         addListeners()
     }
 
-    // TODO Check if it can be removed
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -245,6 +244,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun logInSuccessfully(user: FirebaseUser?) {
-        startActivity(Intent(this, QuizGameActivity::class.java))
+        // TODO - Replace this activity with homepage
+        startActivity(Intent(this, NavigationActivity::class.java))
     }
 }
