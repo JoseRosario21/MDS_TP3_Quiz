@@ -16,6 +16,15 @@
     <string name="login_sign_in_button">Sign in</string>
     <string name="web_client_id">390079287266-5esrurd06c48gm97dd9hodf6vfsr50ci.apps.googleusercontent.com</string>
     <string name="login_sign_in_now_button">Sign up now</string>
+
+    <!-- Home Screen -->
+    <string name="home_welcomeText">Welcome back, <b>%s</b>!</string>
+    <string name="home_letsPlay">Let\'s play!</string>
+    <string name="home_homeContext">Games can be a great way to learn new concepts.</string>
+    <string name="home_daysStrike"><b>%d</b> days strike!</string>
+    <string name="home_newGame">New Game</string>
+    <string name="home_dailyPoints">%d + to daily points</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
