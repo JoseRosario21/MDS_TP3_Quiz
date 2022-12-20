@@ -32,5 +32,7 @@
     <string name="answer3">Dummy answer</string>
     <string name="answer4">Dummy answer</string>
     <string name="current_round_formatter">Question %d of 10</string>
-
+    <string name="quit">Quit</string>
+    <string name="no_return">Press the \"<i>Quit</i>\" button</string>
+    <string name="proceed_to_next">Next Question</string>
 </resources>
