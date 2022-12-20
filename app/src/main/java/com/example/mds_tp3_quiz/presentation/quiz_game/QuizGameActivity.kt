@@ -2,19 +2,20 @@ package com.example.mds_tp3_quiz.presentation.quiz_game
 
 import android.os.Bundle
 import android.os.SystemClock
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.game.QuizGame
 import com.example.mds_tp3_quiz.model.Quiz
-import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.FirstFragment
+import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.InformationFragment
 import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.QuestionFragment
 import kotlinx.android.synthetic.main.activity_quiz_game.*
 
 class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
     private val quizGame: QuizGame = QuizGame(this, this)
 
-    private lateinit var firstFragment: FirstFragment
+    private lateinit var informationFragment: InformationFragment
     private lateinit var questionFragment: QuestionFragment
     private var paused: Long = 0
 
@@ -51,7 +52,7 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
 
     private fun showFirstFragment() {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, firstFragment)
+        transaction.replace(R.id.fragment_container, informationFragment)
         transaction.commit()
     }
 
@@ -70,21 +71,22 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
     }
 
     override fun onGameReady() {
-        firstFragment = FirstFragment()
+        informationFragment = InformationFragment()
         questionFragment = QuestionFragment()
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, firstFragment)
+            .add(R.id.fragment_container, informationFragment)
             .commit()
     }
 
     fun submitAnswer(answer: String){
         quizGame.submitAnswer(answer)
-        showFirstFragment()
-    }
-
-    fun nextQuestion(){
-        quizGame.getNextQuestion()
+        if (quizGame.isFinished()) {
+            Toast.makeText(this, "Score = " + quizGame.getScore(), Toast.LENGTH_SHORT).show()
+            finish()
+        } else {
+            showFirstFragment()
+        }
     }
 
     fun getCurrentQuiz(): Quiz {

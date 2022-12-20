@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
         // Check if user is signed in (non-null) and update UI accordingly.
         if (auth.currentUser != null) {
-            logInSuccessfully()
+            auth.signOut()
         }
         addListeners()
     }

@@ -59,8 +59,4 @@ class QuestionFragment() : Fragment() {
     private fun submitAnswer(answer: String) {
         (activity as QuizGameActivity).submitAnswer(answer)
     }
-
-    private fun nextQuestion(){
-        (activity as QuizGameActivity).nextQuestion()
-    }
 }

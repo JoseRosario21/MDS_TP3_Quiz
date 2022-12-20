@@ -33,7 +33,6 @@
     <style name="Theme.MDS_TP3_Quiz.smallText">
         <item name="android:textSize">20sp</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:textColor">@color/grey</item>
         <item name="android:textStyle">italic</item>
     </style>
 
@@ -44,6 +43,7 @@
     <style name="Theme.MDS_TP3_Quiz.homeProfileInfo">
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
     <style name="Theme.MDS_TP3_Quiz.quizQuestionInfo">

@@ -36,14 +36,15 @@ class QuizGame(private val context: Context, private val onGameReadyListener: On
     }
 
     private fun getQuizFromDocument(document: QueryDocumentSnapshot): Quiz {
-        val question = document.getString("question") ?: "E1"
-        val answerA = document.getString("answerA") ?: "E1"
-        val answerB = document.getString("answerB") ?: "E1"
-        val answerC = document.getString("answerC") ?: "E1"
-        val answerD = document.getString("answerD") ?: "E1"
-        val correctAnswer = document.getString("correctAnswer") ?: "E1"
+        val quizInfo = document.getString("quizInfo") ?: ""
+        val question = document.getString("question") ?: ""
+        val answerA = document.getString("answerA") ?: ""
+        val answerB = document.getString("answerB") ?: ""
+        val answerC = document.getString("answerC") ?: ""
+        val answerD = document.getString("answerD") ?: ""
+        val correctAnswer = document.getString("correctAnswer") ?: ""
 
-        return Quiz(question, answerA, answerB, answerC, answerD, correctAnswer)
+        return Quiz(quizInfo, question, answerA, answerB, answerC, answerD, correctAnswer)
     }
 
     fun getNextQuestion(): Quiz {
@@ -64,7 +65,7 @@ class QuizGame(private val context: Context, private val onGameReadyListener: On
     }
 
     fun isFinished(): Boolean {
-        return currentRound > quizList.size
+        return currentRound >= quizList.size
     }
 
     fun getCurrentQuiz(): Quiz {

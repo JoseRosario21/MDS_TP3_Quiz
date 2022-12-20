@@ -1,6 +1,7 @@
 package com.example.mds_tp3_quiz.model
 
 data class Quiz(
+    val quizInfo: String,
     val question: String,
     val answerA: String,
     val answerB: String,

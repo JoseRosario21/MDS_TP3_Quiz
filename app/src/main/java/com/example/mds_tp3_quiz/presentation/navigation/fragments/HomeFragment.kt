@@ -26,21 +26,25 @@ class HomeFragment : Fragment() {
         super.onResume()
         auth = FirebaseAuth.getInstance()
 
-        if(auth.currentUser != null) {
-            val name: String = showDetails(auth.currentUser)
-            home_welcomeBack.text = String.format(getString(R.string.home_welcomeText), name)
-        }
+        addListeners()
+        setupLayout()
+    }
 
+    private fun addListeners() {
         home_newGame.setOnClickListener {
             startActivity(Intent(this@HomeFragment.requireContext(), QuizGameActivity::class.java))
         }
     }
 
-    private fun showDetails(user: FirebaseUser?): String{
+    private fun setupLayout() {
+        val name = getUserIdentification(auth.currentUser)
+        home_welcomeBack.text = String.format(getString(R.string.home_welcomeText), name)
+        home_daysStrike.text = String.format(getString(R.string.home_daysStrike), 0)
+        home_dailyPoints.text = String.format(getString(R.string.home_dailyPoints), 100)
+    }
 
-        return when (user) {
+    private fun getUserIdentification(user: FirebaseUser?): String = when (user) {
             null -> "Anon_User"
             else -> "${user.displayName}"
-        }
     }
 }

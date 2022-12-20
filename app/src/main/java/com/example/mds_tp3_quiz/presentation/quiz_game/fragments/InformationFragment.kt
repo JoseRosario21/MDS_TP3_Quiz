@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.presentation.quiz_game.QuizGameActivity
-import kotlinx.android.synthetic.main.fragment_first.*
+import kotlinx.android.synthetic.main.fragment_information.*
 
 
-class FirstFragment : Fragment() {
+class InformationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_first, container, false)
+        return inflater.inflate(R.layout.fragment_information, container, false)
     }
 
     override fun onResume() {
@@ -33,6 +33,6 @@ class FirstFragment : Fragment() {
 
     private fun getNextQuiz() {
         val currentQuiz = (activity as QuizGameActivity).getNextQuiz()
-        tv_quiz_info.text = currentQuiz.question
+        tv_quiz_info.text = currentQuiz.quizInfo
     }
 }
