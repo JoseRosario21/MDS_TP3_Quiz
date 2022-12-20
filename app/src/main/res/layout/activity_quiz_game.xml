@@ -4,7 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.quiz_game.QuizGameActivity">
+    android:layout_margin="15dp"
+    tools:context=".presentation.quiz_game.QuizGameActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layout_timer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/image_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_baseline_timer_24" />
+
+        <Chronometer
+            android:id="@+id/game_watch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/image_timer"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btn_quit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:textColor="@color/secondaryTextColor"
+            android:text="@string/quit"/>
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/fragment_container"

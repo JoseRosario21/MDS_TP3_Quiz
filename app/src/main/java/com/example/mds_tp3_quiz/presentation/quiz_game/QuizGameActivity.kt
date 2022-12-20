@@ -1,24 +1,52 @@
 package com.example.mds_tp3_quiz.presentation.quiz_game
 
 import android.os.Bundle
+import android.os.SystemClock
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.game.QuizGame
 import com.example.mds_tp3_quiz.model.Quiz
 import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.FirstFragment
 import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.QuestionFragment
+import kotlinx.android.synthetic.main.activity_quiz_game.*
 
 class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
     private val quizGame: QuizGame = QuizGame(this, this)
 
     private lateinit var firstFragment: FirstFragment
     private lateinit var questionFragment: QuestionFragment
+    private var paused: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_game)
 
+        addListeners()
         quizGame.start()
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() { return }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        game_watch.base = SystemClock.elapsedRealtime() - paused
+        game_watch.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        paused = SystemClock.elapsedRealtime() - game_watch.base
+    }
+
+    private fun addListeners(){
+        btn_quit.setOnClickListener {
+            finish()
+        }
     }
 
     private fun showFirstFragment() {
