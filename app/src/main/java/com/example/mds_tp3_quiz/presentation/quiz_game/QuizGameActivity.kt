@@ -6,13 +6,13 @@ import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.game.QuizGame
 import com.example.mds_tp3_quiz.model.Quiz
 import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.FirstFragment
-import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.SecondFragment
+import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.QuestionFragment
 
 class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
     private val quizGame: QuizGame = QuizGame(this, this)
 
     private lateinit var firstFragment: FirstFragment
-    private lateinit var secondFragment: SecondFragment
+    private lateinit var questionFragment: QuestionFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
 
     private fun showSecondFragment() {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, secondFragment)
+        transaction.replace(R.id.fragment_container, questionFragment)
         transaction.commit()
     }
 
@@ -43,10 +43,27 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
 
     override fun onGameReady() {
         firstFragment = FirstFragment()
-        secondFragment = SecondFragment()
+        questionFragment = QuestionFragment()
 
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, firstFragment)
             .commit()
+    }
+
+    fun submitAnswer(answer: String){
+        quizGame.submitAnswer(answer)
+        showFirstFragment()
+    }
+
+    fun nextQuestion(){
+        quizGame.getNextQuestion()
+    }
+
+    fun getCurrentQuiz(): Quiz {
+        return quizGame.getCurrentQuiz()
+    }
+
+    fun getCurrentRound(): String {
+        return quizGame.getCurrentRound()
     }
 }

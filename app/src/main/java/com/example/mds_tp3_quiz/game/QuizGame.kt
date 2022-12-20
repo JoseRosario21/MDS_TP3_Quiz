@@ -2,6 +2,7 @@ package com.example.mds_tp3_quiz.game
 
 import android.content.Context
 import android.widget.Toast
+import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.model.Quiz
 import com.example.mds_tp3_quiz.presentation.quiz_game.OnGameReadyListener
 import com.google.firebase.firestore.QueryDocumentSnapshot
@@ -64,5 +65,13 @@ class QuizGame(private val context: Context, private val onGameReadyListener: On
 
     fun isFinished(): Boolean {
         return currentRound > quizList.size
+    }
+
+    fun getCurrentQuiz(): Quiz {
+        return quizList[currentRound - 1]
+    }
+
+    fun getCurrentRound(): String {
+        return String.format(context.getString(R.string.current_round_formatter, currentRound))
     }
 }
