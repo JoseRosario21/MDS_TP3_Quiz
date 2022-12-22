@@ -19,9 +19,12 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
-import com.facebook.FacebookSdk
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +41,24 @@ class MainActivity : AppCompatActivity() {
                                 .addOnCompleteListener(this) { task ->
                                     if (task.isSuccessful) {
                                         // Sign in success, update UI with the signed-in user's information
-                                        logInSuccessfully()
+
+                                        db.collection("Users").document(auth.uid!!).get()
+                                            .addOnSuccessListener { document ->
+                                                if (document.exists()) {
+                                                    logInSuccessfully()
+                                                } else {
+                                                    val newUser = hashMapOf(
+                                                        "username" to auth.currentUser?.displayName,
+                                                        "email" to auth.currentUser?.email,
+                                                        "globalPoints" to 0
+                                                    )
+
+                                                    db.collection("Users").document(auth.uid!!)
+                                                        .set(newUser)
+                                                        .addOnSuccessListener { logInSuccessfully() }
+                                                        .addOnFailureListener { e -> Toast.makeText(baseContext, e.message, Toast.LENGTH_SHORT).show() }
+                                                }
+                                            }
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
@@ -53,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
     private lateinit var oneTapClient: SignInClient
     private lateinit var signInRequest: BeginSignInRequest
     private lateinit var callbackManager: CallbackManager
@@ -71,7 +92,7 @@ class MainActivity : AppCompatActivity() {
         callbackManager = CallbackManager.Factory.create()
 
         auth = FirebaseAuth.getInstance()
-
+        db = Firebase.firestore
         oneTapClient = Identity.getSignInClient(this)
     }
 
@@ -180,7 +201,23 @@ class MainActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    logInSuccessfully()
+                    db.collection("Users").document(auth.uid!!).get()
+                        .addOnSuccessListener { document ->
+                            if (document.exists()) {
+                                logInSuccessfully()
+                            } else {
+                                val newUser = hashMapOf(
+                                    "username" to auth.currentUser?.displayName,
+                                    "email" to auth.currentUser?.email,
+                                    "globalPoints" to 0
+                                )
+
+                                db.collection("Users").document(auth.uid!!)
+                                    .set(newUser)
+                                    .addOnSuccessListener { logInSuccessfully() }
+                                    .addOnFailureListener { e -> Toast.makeText(baseContext, e.message, Toast.LENGTH_SHORT).show() }
+                            }
+                        }
                 }
             }
             .addOnFailureListener { e ->
@@ -232,7 +269,28 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    logInSuccessfully()
+
+                    val profileUpdates = UserProfileChangeRequest.Builder()
+                        .setDisplayName(username)
+                        .build()
+                    auth.currentUser?.updateProfile(profileUpdates)
+
+                    db.collection("Users").document(auth.uid!!).get()
+                        .addOnSuccessListener { document ->
+                            if (document.exists()) {
+                                logInSuccessfully()
+                            } else {
+                                val newUser = hashMapOf(
+                                    "username" to username,
+                                    "email" to email,
+                                    "globalPoints" to 0
+                                )
+                                db.collection("Users").document(auth.uid!!)
+                                    .set(newUser)
+                                    .addOnSuccessListener { logInSuccessfully() }
+                                    .addOnFailureListener { e -> Toast.makeText(baseContext, e.message, Toast.LENGTH_SHORT).show() }
+                            }
+                        }
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(baseContext, "Account creation failed.", Toast.LENGTH_SHORT).show()
