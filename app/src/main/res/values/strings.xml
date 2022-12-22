@@ -24,6 +24,7 @@
     <string name="home_daysStrike"><b>%d</b> days strike!</string>
     <string name="home_newGame">New Game</string>
     <string name="home_dailyPoints">%d + to daily points</string>
+    <string name="home_dailyStrikeAchieved">Congratulations! +1 day strike</string>
 
     <!-- Quiz Screen -->
     <string name="question_text">Dummy question</string>
@@ -35,4 +36,5 @@
     <string name="quit">Quit</string>
     <string name="no_return">Press the \"<i>Quit</i>\" button</string>
     <string name="proceed_to_next">Next Question</string>
+    <string name="leaderboard_title">Leaderboard</string>
 </resources>
