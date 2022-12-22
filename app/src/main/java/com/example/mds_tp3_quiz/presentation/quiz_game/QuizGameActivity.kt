@@ -1,5 +1,6 @@
 package com.example.mds_tp3_quiz.presentation.quiz_game
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.widget.Toast
@@ -10,6 +11,10 @@ import com.example.mds_tp3_quiz.game.QuizGame
 import com.example.mds_tp3_quiz.model.Quiz
 import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.InformationFragment
 import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.QuestionFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_quiz_game.*
 
 class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
@@ -82,7 +87,9 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
     fun submitAnswer(answer: String){
         quizGame.submitAnswer(answer)
         if (quizGame.isFinished()) {
+            updateUserPoints()
             Toast.makeText(this, "Score = " + quizGame.getScore(), Toast.LENGTH_SHORT).show()
+            setResult(10, Intent().putExtra("GAME_SCORE", quizGame.getScore() * 10))
             finish()
         } else {
             showFirstFragment()
@@ -95,5 +102,26 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
 
     fun getCurrentRound(): String {
         return quizGame.getCurrentRound()
+    }
+
+    private fun updateUserPoints() {
+        val db = Firebase.firestore
+
+        db.collection("Users")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    if (document.get("email").toString() == FirebaseAuth.getInstance().currentUser?.email) {
+                        val id = document.id
+                        val newPoints =  (quizGame.getScore() * 10) + document.getLong("globalPoints")!!
+                        val data = hashMapOf("globalPoints" to newPoints)
+                        db.collection("Users").document(id)
+                            .set(data, SetOptions.merge())
+                    }
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error updating points", Toast.LENGTH_SHORT).show()
+            }
     }
 }
