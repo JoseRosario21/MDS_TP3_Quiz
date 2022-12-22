@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.game.QuizGame
 import com.example.mds_tp3_quiz.model.Quiz
+import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.GameOverFragment
 import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.InformationFragment
 import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.QuestionFragment
 import kotlinx.android.synthetic.main.activity_quiz_game.*
@@ -17,6 +18,7 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
 
     private lateinit var informationFragment: InformationFragment
     private lateinit var questionFragment: QuestionFragment
+    private lateinit var gameOverFragment: GameOverFragment
     private var paused: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +64,12 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
         transaction.commit()
     }
 
+    private fun showGameOverFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, gameOverFragment)
+        transaction.commit()
+    }
+
     fun getNextQuiz(): Quiz {
         return quizGame.getNextQuestion()
     }
@@ -73,6 +81,7 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
     override fun onGameReady() {
         informationFragment = InformationFragment()
         questionFragment = QuestionFragment()
+        gameOverFragment = GameOverFragment()
 
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, informationFragment)
@@ -82,8 +91,7 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
     fun submitAnswer(answer: String){
         quizGame.submitAnswer(answer)
         if (quizGame.isFinished()) {
-            Toast.makeText(this, "Score = " + quizGame.getScore(), Toast.LENGTH_SHORT).show()
-            finish()
+            showGameOverFragment()
         } else {
             showFirstFragment()
         }
@@ -96,4 +104,9 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
     fun getCurrentRound(): String {
         return quizGame.getCurrentRound()
     }
+
+    fun getScore(): Int {
+        return quizGame.getScore()
+    }
+
 }
