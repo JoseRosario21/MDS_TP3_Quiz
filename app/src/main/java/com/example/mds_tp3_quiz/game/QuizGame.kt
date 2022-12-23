@@ -53,11 +53,13 @@ class QuizGame(private val context: Context, private val onGameReadyListener: On
         return quiz
     }
 
-    fun submitAnswer(answer: String) {
+    fun submitAnswer(answer: String): Boolean {
         val quiz = quizList[currentRound - 1]
-        if (answer == quiz.correctAnswer) {
+        if (answer.equals(quiz.correctAnswer)) {
             score++
+            return true;
         }
+        return false;
     }
 
     fun getScore(): Int {
@@ -65,7 +67,7 @@ class QuizGame(private val context: Context, private val onGameReadyListener: On
     }
 
     fun isFinished(): Boolean {
-        return currentRound > quizList.size
+        return currentRound == quizList.size
     }
 
     fun getCurrentQuiz(): Quiz {

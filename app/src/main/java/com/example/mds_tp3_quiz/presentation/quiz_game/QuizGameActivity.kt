@@ -57,13 +57,13 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
         }
     }
 
-    private fun showFirstFragment() {
+    private fun showInformationFragment() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, informationFragment)
         transaction.commit()
     }
 
-    private fun showSecondFragment() {
+    private fun showQuestionFragment() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, questionFragment)
         transaction.commit()
@@ -80,7 +80,7 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
     }
 
     fun onProceedButtonClick() {
-        showSecondFragment()
+        showQuestionFragment()
     }
 
     override fun onGameReady() {
@@ -93,17 +93,8 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
             .commit()
     }
 
-    fun submitAnswer(answer: String){
-        quizGame.submitAnswer(answer)
-        if (quizGame.isFinished()) {
-            showGameOverFragment()
-            updateUserPoints()
-            Toast.makeText(this, "Score = " + quizGame.getScore(), Toast.LENGTH_SHORT).show()
-            setResult(10, Intent().putExtra("GAME_SCORE", quizGame.getScore() * 10))
-            finish()
-        } else {
-            showFirstFragment()
-        }
+    fun submitAnswer(answer: String): Boolean {
+        return quizGame.submitAnswer(answer)
     }
 
     fun getCurrentQuiz(): Quiz {
@@ -118,6 +109,15 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
         return quizGame.getScore()
     }
 
+    fun checkMatchFinish(){
+        if (quizGame.isFinished()) {
+            game_watch.stop()
+            showGameOverFragment()
+            updateUserPoints()
+        } else {
+            showInformationFragment()
+        }
+    }
 
     private fun updateUserPoints() {
         val db = Firebase.firestore
