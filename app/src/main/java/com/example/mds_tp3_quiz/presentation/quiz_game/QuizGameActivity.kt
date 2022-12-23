@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.game.QuizGame
 import com.example.mds_tp3_quiz.model.Quiz
+import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.GameOverFragment
 import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.InformationFragment
 import com.example.mds_tp3_quiz.presentation.quiz_game.fragments.QuestionFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +23,7 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
 
     private lateinit var informationFragment: InformationFragment
     private lateinit var questionFragment: QuestionFragment
+    private lateinit var gameOverFragment: GameOverFragment
     private var paused: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,15 +57,21 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
         }
     }
 
-    private fun showFirstFragment() {
+    private fun showInformationFragment() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, informationFragment)
         transaction.commit()
     }
 
-    private fun showSecondFragment() {
+    private fun showQuestionFragment() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, questionFragment)
+        transaction.commit()
+    }
+
+    private fun showGameOverFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, gameOverFragment)
         transaction.commit()
     }
 
@@ -72,28 +80,21 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
     }
 
     fun onProceedButtonClick() {
-        showSecondFragment()
+        showQuestionFragment()
     }
 
     override fun onGameReady() {
         informationFragment = InformationFragment()
         questionFragment = QuestionFragment()
+        gameOverFragment = GameOverFragment()
 
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, informationFragment)
             .commit()
     }
 
-    fun submitAnswer(answer: String){
-        quizGame.submitAnswer(answer)
-        if (quizGame.isFinished()) {
-            updateUserPoints()
-            Toast.makeText(this, "Score = " + quizGame.getScore(), Toast.LENGTH_SHORT).show()
-            setResult(10, Intent().putExtra("GAME_SCORE", quizGame.getScore() * 10))
-            finish()
-        } else {
-            showFirstFragment()
-        }
+    fun submitAnswer(answer: String): Boolean {
+        return quizGame.submitAnswer(answer)
     }
 
     fun getCurrentQuiz(): Quiz {
@@ -102,6 +103,20 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
 
     fun getCurrentRound(): String {
         return quizGame.getCurrentRound()
+    }
+
+    fun getScore(): Int {
+        return quizGame.getScore()
+    }
+
+    fun checkMatchFinish(){
+        if (quizGame.isFinished()) {
+            game_watch.stop()
+            showGameOverFragment()
+            updateUserPoints()
+        } else {
+            showInformationFragment()
+        }
     }
 
     private fun updateUserPoints() {

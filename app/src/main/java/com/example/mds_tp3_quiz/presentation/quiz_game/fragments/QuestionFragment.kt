@@ -1,5 +1,6 @@
 package com.example.mds_tp3_quiz.presentation.quiz_game.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,10 @@ import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.model.Quiz
 import com.example.mds_tp3_quiz.presentation.quiz_game.QuizGameActivity
 import kotlinx.android.synthetic.main.fragment_question.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class QuestionFragment() : Fragment() {
     private lateinit var quiz: Quiz
@@ -43,20 +48,50 @@ class QuestionFragment() : Fragment() {
 
     private fun setupAnswerListener() {
         answer1.setOnClickListener {
-            submitAnswer(answer1.text.toString())
+            if(submitAnswer(answer1.text.toString())){
+                answer1.setBackgroundColor(Color.GREEN)
+            }else{
+                answer1.setBackgroundColor(Color.RED)
+            }
+            checkMatchFinish()
         }
         answer2.setOnClickListener {
-            submitAnswer(answer2.text.toString())
+            if(submitAnswer(answer2.text.toString())){
+                answer2.setBackgroundColor(Color.GREEN)
+            }else{
+                answer2.setBackgroundColor(Color.RED)
+            }
+            checkMatchFinish()
         }
         answer3.setOnClickListener {
-            submitAnswer(answer3.text.toString())
+            if(submitAnswer(answer3.text.toString())){
+                answer3.setBackgroundColor(Color.GREEN)
+            }else{
+                answer3.setBackgroundColor(Color.RED)
+            }
+            checkMatchFinish()
         }
         answer4.setOnClickListener {
-            submitAnswer(answer4.text.toString())
+            if(submitAnswer(answer4.text.toString())){
+                answer4.setBackgroundColor(Color.GREEN)
+            }else{
+                answer4.setBackgroundColor(Color.RED)
+            }
+            checkMatchFinish()
         }
     }
 
-    private fun submitAnswer(answer: String) {
-        (activity as QuizGameActivity).submitAnswer(answer)
+    private fun submitAnswer(answer: String): Boolean {
+        return (activity as QuizGameActivity).submitAnswer(answer)
+    }
+
+    private fun checkMatchFinish(){
+        GlobalScope.launch {
+            delay(1000)
+            GlobalScope.launch(Dispatchers.Main) {
+                //Action on UI thread
+                (activity as QuizGameActivity).checkMatchFinish()
+            }
+        }
     }
 }

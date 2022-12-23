@@ -36,5 +36,15 @@
     <string name="quit">Quit</string>
     <string name="no_return">Press the \"<i>Quit</i>\" button</string>
     <string name="proceed_to_next">Next Question</string>
+
+    <!--Game Over Screen-->
+    <string name="congrats">Congrats!</string>
+    <string name="your_score">Your score</string>
+    <string name="play_again">Play Again</string>
+    <string name="correct_answers">%d/10</string>
+    <string name="points_earned">+%d Points</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="leaderboard_title">Leaderboard</string>
 </resources>
