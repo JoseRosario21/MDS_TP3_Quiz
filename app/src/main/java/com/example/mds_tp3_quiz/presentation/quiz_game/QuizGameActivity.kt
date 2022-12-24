@@ -1,10 +1,8 @@
 package com.example.mds_tp3_quiz.presentation.quiz_game
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.game.QuizGame
@@ -24,7 +22,7 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
     private lateinit var informationFragment: InformationFragment
     private lateinit var questionFragment: QuestionFragment
     private lateinit var gameOverFragment: GameOverFragment
-    private var paused: Long = 0
+    private var seconds: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,23 +30,6 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
 
         addListeners()
         quizGame.start()
-
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() { return }
-        })
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        game_watch.base = SystemClock.elapsedRealtime() - paused
-        game_watch.start()
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        paused = SystemClock.elapsedRealtime() - game_watch.base
     }
 
     private fun addListeners(){
@@ -91,6 +72,13 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, informationFragment)
             .commit()
+
+        game_watch.format = getString(R.string.ellapsed_time)
+        game_watch.base = SystemClock.elapsedRealtime()
+        game_watch.setOnChronometerTickListener {
+            seconds++
+        }
+        game_watch.start()
     }
 
     fun submitAnswer(answer: String): Boolean {
@@ -128,7 +116,7 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
                 for (document in result) {
                     if (document.get("email").toString() == FirebaseAuth.getInstance().currentUser?.email) {
                         val id = document.id
-                        val newPoints =  (quizGame.getScore() * 10) + document.getLong("globalPoints")!!
+                        val newPoints = getPointsEarned() + document.getLong("globalPoints")!!
                         val data = hashMapOf("globalPoints" to newPoints)
                         db.collection("Users").document(id)
                             .set(data, SetOptions.merge())
@@ -137,6 +125,21 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Error updating points", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    fun getPointsEarned(): Int = when {
+            seconds <= 60 -> {
+                // Finished under a minute
+                (quizGame.getScore() * 10) * 3
+            }
+            seconds <= 120 -> {
+                // Finished between 1 and 2 minutes
+                (quizGame.getScore() * 10) * 2
+            }
+            else -> {
+                // Finished over 2 minutes
+                quizGame.getScore() * 10
             }
     }
 }
