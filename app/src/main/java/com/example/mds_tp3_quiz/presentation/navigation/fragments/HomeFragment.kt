@@ -51,14 +51,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupLayout() {
-        val name = getUserIdentification(auth.currentUser)
+        val name = getUserIdentification(auth.currentUser!!)
         home_welcomeBack.text = String.format(getString(R.string.home_welcomeText), name)
         home_daysStrike.text = String.format(getString(R.string.home_daysStrike), 0)
         home_dailyPoints.text = String.format(getString(R.string.home_dailyPoints), 100)
     }
 
-    private fun getUserIdentification(user: FirebaseUser?): String = when (user) {
-            null -> "Anon_User"
-            else -> "${user.displayName}"
-    }
+    private fun getUserIdentification(user: FirebaseUser): String = if (user.isAnonymous) "Anonymous user" else user.displayName ?: ""
 }
