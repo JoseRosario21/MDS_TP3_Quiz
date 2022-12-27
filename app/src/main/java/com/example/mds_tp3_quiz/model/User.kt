@@ -4,4 +4,5 @@ data class User(
     val username: String,
     val email: String,
     val globalPoints: Int,
+    val totalMatches: Int
 )

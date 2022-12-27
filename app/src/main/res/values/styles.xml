@@ -51,4 +51,9 @@
         <item name="android:textStyle">normal</item>
         <item name="android:fontFamily">casual</item>
     </style>
+
+    <style name="roundedImageViewRounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

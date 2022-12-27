@@ -1,7 +1,11 @@
 package com.example.mds_tp3_quiz.presentation.navigation
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
+import android.content.Intent
+import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -11,6 +15,8 @@ import com.example.mds_tp3_quiz.presentation.navigation.fragments.HomeFragment
 import com.example.mds_tp3_quiz.presentation.navigation.fragments.ProfileFragment
 import com.example.mds_tp3_quiz.presentation.navigation.fragments.RankingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.io.File
+
 
 class NavigationActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
@@ -20,6 +26,13 @@ class NavigationActivity : AppCompatActivity() {
     private val home = HomeFragment()
     private val ranking = RankingFragment()
     private val profile = ProfileFragment()
+
+    companion object{
+        private val REQUEST_CODE:Int = 13
+        fun getRequestCode() : Int {
+            return REQUEST_CODE
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,5 +75,15 @@ class NavigationActivity : AppCompatActivity() {
                 bottomNavigation.menu[position].isChecked = true
             }
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            if (data != null) {
+                data.data?.let { profile.setImage(it) }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+
     }
 }
