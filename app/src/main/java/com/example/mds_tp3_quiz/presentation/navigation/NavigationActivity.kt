@@ -2,8 +2,6 @@ package com.example.mds_tp3_quiz.presentation.navigation
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.ImageDecoder
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
@@ -15,8 +13,6 @@ import com.example.mds_tp3_quiz.presentation.navigation.fragments.HomeFragment
 import com.example.mds_tp3_quiz.presentation.navigation.fragments.ProfileFragment
 import com.example.mds_tp3_quiz.presentation.navigation.fragments.RankingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.io.File
-
 
 class NavigationActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
@@ -80,7 +76,7 @@ class NavigationActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK){
             if (data != null) {
-                data.data?.let { profile.setImage(it) }
+                data.data?.let { profile.saveNewProfilePicture(it) }
             }
         }
         super.onActivityResult(requestCode, resultCode, data)

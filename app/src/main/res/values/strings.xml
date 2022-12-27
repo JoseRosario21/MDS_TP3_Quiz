@@ -44,8 +44,6 @@
     <string name="correct_answers">%d/10</string>
     <string name="points_earned">+%d Points</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="leaderboard_title">Leaderboard</string>
     <string name="email">%s</string>
     <string name="nickname">%s</string>

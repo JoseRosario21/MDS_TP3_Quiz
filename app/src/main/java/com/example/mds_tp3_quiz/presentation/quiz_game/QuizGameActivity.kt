@@ -1,6 +1,5 @@
 package com.example.mds_tp3_quiz.presentation.quiz_game
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.widget.Toast
@@ -129,7 +128,11 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
                     if (document.get("email").toString() == FirebaseAuth.getInstance().currentUser?.email) {
                         val id = document.id
                         val newPoints =  (quizGame.getScore() * 10) + document.getLong("globalPoints")!!
-                        val data = hashMapOf("globalPoints" to newPoints)
+                        val totalMatches = document.getLong("totalMatches")!! + 1
+                        val data = hashMapOf(
+                            "globalPoints" to newPoints,
+                            "totalMatches" to totalMatches
+                        )
                         db.collection("Users").document(id)
                             .set(data, SetOptions.merge())
                     }
