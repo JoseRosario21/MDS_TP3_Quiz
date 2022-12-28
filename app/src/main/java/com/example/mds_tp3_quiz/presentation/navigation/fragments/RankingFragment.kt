@@ -25,8 +25,10 @@ class RankingFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_ranking, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        rank_loading_animation.visibility = View.VISIBLE
         loadLeaderboard()
     }
 
@@ -39,14 +41,14 @@ class RankingFragment : Fragment() {
                 userList.clear()
                 for (document in result) {
                     userList.add(getUserFromDB(document))
-                    val sortedPlayers = userList.sortedWith(compareByDescending { it.globalPoints })
-                    val layoutManager = LinearLayoutManager(requireContext())
-                    val adapter = LeaderboardAdapter()
-                    adapter.setLeaderboard(sortedPlayers)
-                    rv_leaderboard.layoutManager = layoutManager
-                    rv_leaderboard.adapter = adapter
-
                 }
+                rank_loading_animation.visibility = View.GONE
+                val sortedPlayers = userList.sortedWith(compareByDescending { it.globalPoints })
+                val layoutManager = LinearLayoutManager(requireContext())
+                val adapter = LeaderboardAdapter(requireContext())
+                adapter.setLeaderboard(sortedPlayers)
+                rv_leaderboard.layoutManager = layoutManager
+                rv_leaderboard.adapter = adapter
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Error obtaining leaderboard", Toast.LENGTH_SHORT).show()
@@ -54,10 +56,14 @@ class RankingFragment : Fragment() {
     }
 
     private fun getUserFromDB(document: QueryDocumentSnapshot): User {
+        val id = document.get("id").toString()
         val username = document.get("username").toString()
         val email = document.get("email").toString()
         val points = document.getLong("globalPoints")?.toInt() ?: 0
+        val totalMatches = document.getLong("totalMatches")?.toInt() ?: 0
+        val level = document.getLong("level")?.toInt() ?: 1
+        val currentExp = document.getLong("currentExp")?.toInt() ?: 0
 
-        return User(username, email, points)
+        return User(id, username, email, points, totalMatches, level, currentExp)
     }
 }

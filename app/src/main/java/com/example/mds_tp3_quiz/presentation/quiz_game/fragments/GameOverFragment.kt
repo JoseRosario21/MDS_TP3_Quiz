@@ -26,7 +26,7 @@ class GameOverFragment : Fragment() {
 
     private fun addListeners() {
         playAgain.setOnClickListener {
-            activity?.finish()
+            (activity as QuizGameActivity).finishGameWithScore()
         }
     }
 

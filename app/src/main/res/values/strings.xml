@@ -18,13 +18,13 @@
     <string name="login_sign_in_now_button">Sign up now</string>
 
     <!-- Home Screen -->
-    <string name="home_welcomeText">Welcome back, <b>%s</b>!</string>
+    <string name="home_welcomeText">Welcome, <b>%s</b>!</string>
     <string name="home_letsPlay">Let\'s play!</string>
     <string name="home_homeContext">Games can be a great way to learn new concepts.</string>
-    <string name="home_daysStrike"><b>%d</b> days strike!</string>
+    <string name="home_currentLevel"><b>Level %d</b></string>
     <string name="home_newGame">New Game</string>
-    <string name="home_dailyPoints">%d + to daily points</string>
-    <string name="home_dailyStrikeAchieved">Congratulations! +1 day strike</string>
+    <string name="home_currentExp">%d points to level up</string>
+    <string name="home_leveled_up">Congratulations! You\'ve leveled up</string>
 
     <!-- Quiz Screen -->
     <string name="question_text">Dummy question</string>
@@ -44,8 +44,12 @@
     <string name="correct_answers">%d/10</string>
     <string name="points_earned">+%d Points</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="leaderboard_title">Leaderboard</string>
-    <string name="ellapsed_time">Ellapsed Time: %s</string>
+    <string name="email">%s</string>
+    <string name="nickname">%s</string>
+    <string name="total_matches">%d</string>
+    <string name="total_points">%d</string>
+    <string name="rank">%s</string>
+
+    <string name="elapsed_time">Elapsed Time: %s</string>
 </resources>

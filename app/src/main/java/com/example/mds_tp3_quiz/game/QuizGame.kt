@@ -5,9 +5,10 @@ import android.widget.Toast
 import com.example.mds_tp3_quiz.R
 import com.example.mds_tp3_quiz.model.Quiz
 import com.example.mds_tp3_quiz.presentation.quiz_game.OnGameReadyListener
-import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlin.random.Random
 
 class QuizGame(private val context: Context, private val onGameReadyListener: OnGameReadyListener) {
     private val quizList = mutableListOf<Quiz>()
@@ -25,8 +26,13 @@ class QuizGame(private val context: Context, private val onGameReadyListener: On
         db.collection("QuizCollection")
             .get()
             .addOnSuccessListener { result ->
-                for (document in result) {
-                    quizList.add(getQuizFromDocument(document))
+                val quizIndexes = mutableListOf<Int>()
+                while (quizList.size < 2) {
+                    val randomIndex = Random.nextInt(0, result.size())
+                    if (!quizIndexes.contains(randomIndex)) {
+                        quizIndexes.add(randomIndex)
+                        quizList.add(getQuizFromDocument(result.documents[randomIndex]))
+                    }
                 }
                 onGameReadyListener.onGameReady()
             }
@@ -35,7 +41,7 @@ class QuizGame(private val context: Context, private val onGameReadyListener: On
             }
     }
 
-    private fun getQuizFromDocument(document: QueryDocumentSnapshot): Quiz {
+    private fun getQuizFromDocument(document: DocumentSnapshot): Quiz {
         val quizInfo = document.getString("quizInfo") ?: ""
         val question = document.getString("question") ?: ""
         val answerA = document.getString("answerA") ?: ""
