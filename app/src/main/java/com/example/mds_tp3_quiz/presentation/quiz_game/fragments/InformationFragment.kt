@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.mds_tp3_quiz.R
+import com.example.mds_tp3_quiz.model.Quiz
 import com.example.mds_tp3_quiz.presentation.quiz_game.QuizGameActivity
 import kotlinx.android.synthetic.main.fragment_information.*
 
@@ -18,11 +19,10 @@ class InformationFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_information, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         addListeners()
-
-        getNextQuiz()
+        loadQuiz((activity as QuizGameActivity).getNextQuiz())
     }
 
     private fun addListeners() {
@@ -31,8 +31,7 @@ class InformationFragment : Fragment() {
         }
     }
 
-    private fun getNextQuiz() {
-        val currentQuiz = (activity as QuizGameActivity).getNextQuiz()
-        tv_quiz_info.text = currentQuiz.quizInfo
+    fun loadQuiz(quiz: Quiz) {
+        tv_quiz_info.text = quiz.quizInfo
     }
 }

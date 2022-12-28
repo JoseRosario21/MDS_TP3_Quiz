@@ -55,11 +55,11 @@ class QuizGame(private val context: Context, private val onGameReadyListener: On
 
     fun submitAnswer(answer: String): Boolean {
         val quiz = quizList[currentRound - 1]
-        if (answer.equals(quiz.correctAnswer)) {
+        if (answer == quiz.correctAnswer) {
             score++
-            return true;
+            return true
         }
-        return false;
+        return false
     }
 
     fun getScore(): Int {
