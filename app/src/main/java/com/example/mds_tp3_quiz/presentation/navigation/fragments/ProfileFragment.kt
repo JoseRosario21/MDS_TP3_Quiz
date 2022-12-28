@@ -44,12 +44,15 @@ class ProfileFragment : Fragment() {
     }
 
     private fun getUserFromDB(document: DocumentSnapshot): User {
+        val id = document.get("id").toString()
         val username = document.get("username").toString()
         val email = document.get("email").toString()
         val points = document.getLong("globalPoints")?.toInt() ?: 0
         val totalMatches = document.getLong("totalMatches")?.toInt() ?: 0
+        val level = document.getLong("level")?.toInt() ?: 1
+        val currentExp = document.getLong("currentExp")?.toInt() ?: 0
 
-        return User(username, email, points, totalMatches)
+        return User(id, username, email, points, totalMatches, level, currentExp)
     }
 
     private fun setupUserProfile(){

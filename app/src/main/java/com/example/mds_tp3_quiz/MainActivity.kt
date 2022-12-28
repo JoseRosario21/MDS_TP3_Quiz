@@ -48,9 +48,13 @@ class MainActivity : AppCompatActivity() {
                                                     logInSuccessfully()
                                                 } else {
                                                     val newUser = hashMapOf(
+                                                        "id" to auth.currentUser?.uid,
                                                         "username" to auth.currentUser?.displayName,
                                                         "email" to auth.currentUser?.email,
-                                                        "globalPoints" to 0
+                                                        "globalPoints" to 0,
+                                                        "totalMatches" to 0,
+                                                        "level" to 1,
+                                                        "currentExp" to 0
                                                     )
 
                                                     db.collection("Users").document(auth.uid!!)
@@ -207,9 +211,13 @@ class MainActivity : AppCompatActivity() {
                                 logInSuccessfully()
                             } else {
                                 val newUser = hashMapOf(
+                                    "id" to auth.currentUser?.uid,
                                     "username" to auth.currentUser?.displayName,
                                     "email" to auth.currentUser?.email,
-                                    "globalPoints" to 0
+                                    "globalPoints" to 0,
+                                    "totalMatches" to 0,
+                                    "level" to 1,
+                                    "currentExp" to 0
                                 )
 
                                 db.collection("Users").document(auth.uid!!)
@@ -281,9 +289,13 @@ class MainActivity : AppCompatActivity() {
                                 logInSuccessfully()
                             } else {
                                 val newUser = hashMapOf(
+                                    "id" to auth.currentUser?.uid,
                                     "username" to username,
                                     "email" to email,
-                                    "globalPoints" to 0
+                                    "globalPoints" to 0,
+                                    "totalMatches" to 0,
+                                    "level" to 1,
+                                    "currentExp" to 0
                                 )
                                 db.collection("Users").document(auth.uid!!)
                                     .set(newUser)

@@ -1,5 +1,7 @@
 package com.example.mds_tp3_quiz.presentation.quiz_game
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.widget.Toast
@@ -34,6 +36,7 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
 
     private fun addListeners(){
         btn_quit.setOnClickListener {
+            setResult(Activity.RESULT_CANCELED)
             finish()
         }
     }
@@ -73,7 +76,7 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
             .add(R.id.fragment_container, informationFragment)
             .commit()
 
-        game_watch.format = getString(R.string.ellapsed_time)
+        game_watch.format = getString(R.string.elapsed_time)
         game_watch.base = SystemClock.elapsedRealtime()
         game_watch.setOnChronometerTickListener {
             seconds++
@@ -117,8 +120,6 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
                     if (document.get("email").toString() == FirebaseAuth.getInstance().currentUser?.email) {
                         val id = document.id
                         val newPoints = getPointsEarned() + document.getLong("globalPoints")!!
-                        val data = hashMapOf("globalPoints" to newPoints)
-                        val newPoints =  (quizGame.getScore() * 10) + document.getLong("globalPoints")!!
                         val totalMatches = document.getLong("totalMatches")!! + 1
                         val data = hashMapOf(
                             "globalPoints" to newPoints,
@@ -147,5 +148,11 @@ class QuizGameActivity : AppCompatActivity(), OnGameReadyListener {
                 // Finished over 2 minutes
                 quizGame.getScore() * 10
             }
+    }
+
+    fun finishGameWithScore() {
+        val intent = Intent().putExtra("GAME_SCORE", getPointsEarned())
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 }
