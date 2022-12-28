@@ -13,6 +13,7 @@ import com.example.mds_tp3_quiz.presentation.navigation.fragments.adapter.Leader
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_ranking.*
 
 class RankingFragment : Fragment() {
@@ -25,8 +26,10 @@ class RankingFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_ranking, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        rank_loading_animation.visibility = View.VISIBLE
         loadLeaderboard()
     }
 
@@ -45,8 +48,8 @@ class RankingFragment : Fragment() {
                     adapter.setLeaderboard(sortedPlayers)
                     rv_leaderboard.layoutManager = layoutManager
                     rv_leaderboard.adapter = adapter
-
                 }
+                rank_loading_animation.visibility = View.GONE
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Error obtaining leaderboard", Toast.LENGTH_SHORT).show()
