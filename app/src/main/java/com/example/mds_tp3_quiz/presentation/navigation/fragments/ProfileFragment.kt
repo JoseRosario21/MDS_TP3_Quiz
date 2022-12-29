@@ -35,12 +35,15 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         loading_animation.visibility = View.VISIBLE
-
         loadLeaderboard()
-
         setupListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loading_animation.visibility = View.VISIBLE
+        loadLeaderboard()
     }
 
     private fun getUserFromDB(document: DocumentSnapshot): User {

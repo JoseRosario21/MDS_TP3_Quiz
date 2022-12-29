@@ -10,7 +10,6 @@
             android:id="@+id/home_welcomeBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/home_welcomeText"
             android:layout_alignParentTop="true"
             android:alpha="0.7"
             style="@style/Theme.MDS_TP3_Quiz.smallText"/>
@@ -51,8 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
-            android:layout_marginHorizontal="@dimen/normal_margin"
-            android:text="@string/home_currentLevel" />
+            android:layout_marginHorizontal="@dimen/normal_margin"/>
 
         <TextView
             android:id="@+id/home_current_exp"
@@ -60,8 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normal_margin"
-            android:layout_marginHorizontal="@dimen/normal_margin"
-            android:text="@string/home_currentExp" />
+            android:layout_marginHorizontal="@dimen/normal_margin"/>
 
         <ProgressBar
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
