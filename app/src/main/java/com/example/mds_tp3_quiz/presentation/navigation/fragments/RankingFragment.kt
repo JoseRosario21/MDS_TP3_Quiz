@@ -32,6 +32,11 @@ class RankingFragment : Fragment() {
         loadLeaderboard()
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadLeaderboard()
+    }
+
     private fun loadLeaderboard() {
         val db = Firebase.firestore
 
