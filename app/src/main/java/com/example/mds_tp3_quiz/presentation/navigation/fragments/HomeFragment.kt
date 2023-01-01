@@ -31,16 +31,21 @@ class HomeFragment : Fragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val score = result.data?.getIntExtra("GAME_SCORE", 0)
                 if (score != null) {
-                    home_profileExpBar.progress += score
-                    if (home_profileExpBar.progress < 100) {
+                    val progress = home_profileExpBar.progress + score
+
+                    if (progress < 100) {
+
+                        home_profileExpBar.progress += score
                         home_current_exp.text = String.format(getString(R.string.home_currentExp), 100 - home_profileExpBar.progress)
                         updateUserExp(home_profileExpBar.progress)
-                    } else {
-                        level++
-                        home_current_exp.text = getString(R.string.home_leveled_up)
+                    }
+                    else {
+
+                        level += progress / 100
+                        home_profileExpBar.progress = progress % 100
+                        home_current_exp.text = String.format(getString(R.string.home_leveled_up) + "\n" + getString(R.string.home_currentExp), 100 - home_profileExpBar.progress)
                         home_user_level.text = String.format(getString(R.string.home_currentLevel), level)
-                        home_profileExpBar.progress = 0
-                        updateUserLevel()
+                        updateUserLevel(level, home_profileExpBar.progress)
                     }
                 }
             }
@@ -57,13 +62,12 @@ class HomeFragment : Fragment() {
             .set(data, SetOptions.merge())
     }
 
-    private fun updateUserLevel() {
+    private fun updateUserLevel(level: Int, currentExp: Int) {
         val db = Firebase.firestore
 
-        val level = level + 1
         val data = hashMapOf(
             "level" to level,
-            "currentExp" to 0
+            "currentExp" to currentExp
         )
         db.collection("Users").document(user.id)
             .set(data, SetOptions.merge())

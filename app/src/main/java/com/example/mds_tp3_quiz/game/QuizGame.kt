@@ -27,10 +27,12 @@ class QuizGame(private val context: Context, private val onGameReadyListener: On
             .get()
             .addOnSuccessListener { result ->
                 val quizIndexes = mutableListOf<Int>()
-                while (quizList.size < 2) {
+                val quizInfo = mutableListOf<String>()
+                while (quizList.size < 10) {
                     val randomIndex = Random.nextInt(0, result.size())
-                    if (!quizIndexes.contains(randomIndex)) {
+                    if (!quizIndexes.contains(randomIndex) && !quizInfo.contains(result.documents[randomIndex].getString("quizInfo"))) {
                         quizIndexes.add(randomIndex)
+                        quizInfo.add(result.documents[randomIndex].getString("quizInfo") ?: "")
                         quizList.add(getQuizFromDocument(result.documents[randomIndex]))
                     }
                 }
