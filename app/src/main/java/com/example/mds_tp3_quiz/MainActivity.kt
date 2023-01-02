@@ -120,7 +120,6 @@ class MainActivity : AppCompatActivity() {
     private fun addListeners() {
         btn_signup.setOnClickListener { createRegularAccount() }
         btn_signin.setOnClickListener { loginWithEmail() }
-        fab_email_login.setOnClickListener { loginAnonymously() }
         fab_google_login.setOnClickListener { logInViaGoogleAccount() }
         fab_facebook_login.setOnClickListener { logInViaFacebookAccount() }
 
@@ -165,17 +164,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             btn_signup.isEnabled = false
         }
-    }
-
-    private fun loginAnonymously() {
-        auth.signInAnonymously()
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    logInSuccessfully()
-                } else {
-                    Toast.makeText(this, "An error occurred. Please try again later.", Toast.LENGTH_SHORT).show()
-                }
-            }
     }
 
     private fun logInViaFacebookAccount() {

@@ -156,23 +156,12 @@
             android:layout_below="@+id/ll_login_other_options">
 
             <ImageView
-                android:id="@+id/fab_email_login"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:padding="3dp"
-                android:src="@drawable/ic_anonymous_login"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fab_google_login"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/primaryColor" />
-
-            <ImageView
                 android:id="@+id/fab_google_login"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:padding="3dp"
                 android:src="@drawable/btn_google"
-                app:layout_constraintStart_toEndOf="@+id/fab_email_login"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/fab_facebook_login"
                 app:layout_constraintTop_toTopOf="parent"/>
 
