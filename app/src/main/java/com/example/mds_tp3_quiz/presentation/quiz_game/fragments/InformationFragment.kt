@@ -32,6 +32,7 @@ class InformationFragment : Fragment() {
     }
 
     fun loadQuiz(quiz: Quiz) {
-        tv_quiz_info.text = quiz.quizInfo
+        val formattedString = quiz.quizInfo.replace(". ", ".\n")
+        tv_quiz_info.text = formattedString
     }
 }
